@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "plugin:react/recommended"
+  ],
+  "ignorePatterns": ["webpack.config.js"],
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+        "jsx": true
+    }
+  },
+  "parser": "babel-eslint",
+  "rules": {
+      "quotes": [2, "single"]
+  }
+}
