@@ -1,5 +1,4 @@
 .main {
-    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -9,8 +8,12 @@
     right: 0;
     left: 0;
     bottom: 0;
+    overflow: scroll;
     background: {
         image: url(../../img/backround.jpg);
+        repeat: no-repeat;
+        attachment: fixed;
+        size: cover;
     }
 }
 
@@ -21,4 +24,22 @@ h1 {
         weight: 500;
         family: Brush Script MT, Brush Script Std, cursive;
     }
+}
+
+.options {
+    width: 70%;
+    height: 4%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+.addButton {
+    font-family: Gill Sans, sans-serif;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: rgba(0, 0, 146, 0.685);
 }

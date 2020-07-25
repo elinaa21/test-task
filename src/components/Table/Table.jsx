@@ -1,16 +1,33 @@
 import React from 'react';
 
+import arrowDown from '../../img/down.png';
+
 import './Table.scss';
 
 const Table = () => (
     <table>
         <thead>
             <tr>
-                <td>id</td>
-                <td>firstName</td>
-                <td>lastName</td>
-                <td>email</td>
-                <td>phone</td>
+                <td>
+                    id
+                    <img src={arrowDown} className='arrow' />
+                </td>
+                <td>
+                    firstName
+                    <img src={arrowDown} className='arrow' />
+                </td>
+                <td>
+                    lastName
+                    <img src={arrowDown} className='arrow' />
+                </td>
+                <td>
+                    email
+                    <img src={arrowDown} className='arrow' />
+                </td>
+                <td>
+                    phone
+                    <img src={arrowDown} className='arrow' />
+                </td>
             </tr>
         </thead>
         <tbody>
