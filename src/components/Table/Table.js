@@ -3,14 +3,39 @@ import React from 'react';
 import './Table.scss';
 
 const Table = () => (
-    <table className='table'>
-        <th>
-            <td className='table__head'>id</td>
-            <td className='table__head'>firstName</td>
-            <td className='table__head'>lastName</td>
-            <td className='table__head'>email</td>
-            <td className='table__head'>phone</td>
-        </th>
+    <table>
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>firstName</td>
+                <td>lastName</td>
+                <td>email</td>
+                <td>phone</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Имя</td>
+                <td>Характеристики</td>
+                <td>Стоимость</td>
+                <td>Характеристики</td>
+                <td>Стоимость</td>
+            </tr>
+            <tr>
+                <td>Имя #2</td>
+                <td>Характеристики</td>
+                <td>Стоимость</td>
+                <td>Характеристики</td>
+                <td>Стоимость</td>
+            </tr>
+            <tr>
+                <td>Имя #3</td>
+                <td>Характеристики</td>
+                <td>Стоимость</td>
+                <td>Характеристики</td>
+                <td>Стоимость</td>
+            </tr>
+        </tbody>
     </table>
 )
 
