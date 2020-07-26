@@ -1,0 +1,25 @@
+.addField {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2%;
+    font-family: Gill Sans, sans-serif;
+
+    &__input {
+        height: 60%;
+        outline: none;
+        border: none;
+        border-radius: 20px;
+        padding: 7px 20px;
+    }
+
+    &__button {
+        margin-top: 10%;
+        font-family: Gill Sans, sans-serif;
+        padding: 5px 20px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        color: white;
+        background-color: rgba(0, 0, 146, 0.685);
+    }
+}
