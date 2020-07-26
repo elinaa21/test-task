@@ -1,9 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import store from '../../redux/store'
 import Table from '../Table/Table.jsx'
 import About from '../About/About.jsx';
 import Search from '../Search/Search.jsx';
 import AddField from '../AddField/AddField.jsx';
+import ChooseAmount from '../ChooseAmount/ChooseAmount.jsx';
 
 import './App.scss';
 
@@ -27,6 +31,8 @@ class App extends React.Component {
 
     render() {
         return (
+            !this.props.data || !this.props.data.length ?
+            <ChooseAmount /> :
             <div className='main'>
                 <h1>Table with users</h1>
                 <div className='options'>
@@ -41,4 +47,13 @@ class App extends React.Component {
     }
 }
 
-export default App;
+
+App.propTypes = {
+    data: PropTypes.array
+};
+
+const mapStateToProps = (state) => ({
+    data: state.table.data,
+});
+
+export default connect(mapStateToProps)(App);

@@ -1,11 +1,9 @@
 export const actionTypes = {
-    SET_DATA: 'ADD_SMALL_DATA',
-    SET_AMOUNT_OF_DATA: 'SET_AMOUNT_OF_DATA'
+    SET_DATA: 'ADD_SMALL_DATA'
 }
 
 const initialState = {
     data: [],
-    amountOfData: '',
 };
 
 export const tableReducer = (state = initialState, action) => {
@@ -13,13 +11,7 @@ export const tableReducer = (state = initialState, action) => {
         case actionTypes.SET_DATA:
             return {
                 ...state,
-                data: action.payload.data
-            };
-
-        case actionTypes.SET_AMOUNT_OF_DATA:
-            return {
-                ...state,
-                data: action.payload.amountOfData
+                data: [...action.payload.data]
             };
 
         default:
