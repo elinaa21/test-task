@@ -3,79 +3,113 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import arrowDown from '../../img/down.png';
+import arrowRight from '../../img/right.png';
+import arrowLeft from '../../img/left.png';
+import { increasePageNumber, decreasePageNumber } from '../../redux/actions';
 
 import './Table.scss';
 
 class Table extends React.Component {
-    addUsers = () => {
-        const tableBody = document.getElementById('tableBody');
-        const users20 = this.props.data.slice(0, 20);
-            users20.forEach(user => {
-                const tr = document.createElement('tr');
-
-                const tdId = tr.appendChild(document.createElement('td'));
-                tdId.innerHTML = user.id;
-
-                const tdFirstName = tr.appendChild(document.createElement('td'));
-                tdFirstName.innerHTML = user.firstName;
-
-                const tdLastName = tr.appendChild(document.createElement('td'));
-                tdLastName.innerHTML = user.lastName;
-
-                const tdEmail = tr.appendChild(document.createElement('td'));
-                tdEmail.innerHTML = user.email;
-
-                const tdPhone = tr.appendChild(document.createElement('td'));
-                tdPhone.innerHTML = user.phone;
-
-                tableBody.appendChild(tr);
-            });
-    }
-
-    componentDidMount() {
-        this.addUsers();
-    }
     
     render() {
+        const { 
+            data, 
+            pageNumber, 
+            pageCount, 
+            increasePageNumber, 
+            decreasePageNumber,
+            begin,
+            end,
+            found,
+            searchText
+        } = this.props;
+
+        const canClickLeft = pageNumber !== 0;
+        const canClickRight = pageNumber !== pageCount - 1;
+        
         return (
-            <table id='table'>
-                <thead>
-                    <tr>
-                        <td>
-                            id
-                            <img src={arrowDown} className='arrow' />
-                        </td>
-                        <td>
-                            firstName
-                            <img src={arrowDown} className='arrow' />
-                        </td>
-                        <td>
-                            lastName
-                            <img src={arrowDown} className='arrow' />
-                        </td>
-                        <td>
-                            email
-                            <img src={arrowDown} className='arrow' />
-                        </td>
-                        <td>
-                            phone
-                            <img src={arrowDown} className='arrow' />
-                        </td>
-                    </tr>
-                </thead>
-                <tbody id='tableBody'>
-                </tbody>
-            </table>
+            <div className='tableField'>
+                <img 
+                    src={arrowLeft} 
+                    className={`arrow arrow_active_${canClickLeft}`} 
+                    onClick={canClickLeft ? decreasePageNumber : undefined}
+                />
+                <table id='table'>
+                    <thead>
+                        <tr>
+                            <td>
+                                id
+                                <img src={arrowDown} className='table__arrow' />
+                            </td>
+                            <td>
+                                firstName
+                                <img src={arrowDown} className='table__arrow' />
+                            </td>
+                            <td>
+                                lastName
+                                <img src={arrowDown} className='table__arrow' />
+                            </td>
+                            <td>
+                                email
+                                <img src={arrowDown} className='table__arrow' />
+                            </td>
+                            <td>
+                                phone
+                                <img src={arrowDown} className='table__arrow' />
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id='tableBody'>
+                        {
+                            (searchText.length ? found : data).slice(begin, end).map(({ id, firstName, lastName, email, phone }) => (
+                                <tr key={id + Math.floor(Math.random() * 900000)}>
+                                    <td>{id}</td>
+                                    <td>{firstName}</td>
+                                    <td>{lastName}</td>
+                                    <td>{email}</td>
+                                    <td>{phone}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+                <img 
+                    src={arrowRight} 
+                    className={`arrow arrow_active_${canClickRight}`} 
+                    onClick={canClickRight ? increasePageNumber : undefined}
+                />
+            </div>
         )
     }
 }
 
 Table.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    pageNumber: PropTypes.number,
+    pageCount: PropTypes.number,
+    increasePageNumber: PropTypes.func,
+    decreasePageNumber: PropTypes.func,
+    begin: PropTypes.number,
+    end: PropTypes.number,
+    searchFlag: PropTypes.bool,
+    found: PropTypes.array,
+    searchText: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
     data: state.table.data,
+    pageNumber: state.table.pageNumber,
+    pageCount: state.table.pageCount,
+    begin: state.table.begin,
+    end: state.table.end,
+    searchFlag: state.table.searchFlag,
+    searchText: state.table.searchText,
+    found: state.table.found,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+    increasePageNumber: () => dispatch(increasePageNumber()),
+    decreasePageNumber: () => dispatch(decreasePageNumber())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

@@ -57,8 +57,23 @@ table {
     }
 }
 
-.arrow {
+
+.tableField {
+    display: flex;
+    justify-content: center;
+}
+
+.table__arrow {
     width: 8%;
     margin-left: 2%;
     cursor: pointer;
+}
+.arrow {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+
+    &_active_false {
+        opacity: 0.5;
+    }
 }

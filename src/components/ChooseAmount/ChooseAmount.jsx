@@ -17,7 +17,6 @@ const ChooseAmount = (props) => {
             .then(res => res.json())
             .then(res => {
                 props.setData(res);
-                console.log(props.data);
             });
     }
 

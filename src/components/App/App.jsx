@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import store from '../../redux/store'
 import Table from '../Table/Table.jsx'
 import About from '../About/About.jsx';
 import Search from '../Search/Search.jsx';
