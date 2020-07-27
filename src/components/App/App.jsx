@@ -40,7 +40,7 @@ class App extends React.Component {
                 </div>
                     {this.state.showAddField ? <AddField /> : <></>}
                 <Table />
-                <About />
+                {this.props.currentUser ? <About /> : <></>}
             </div>
         )
     }
@@ -48,11 +48,13 @@ class App extends React.Component {
 
 
 App.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    currentUser: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
     data: state.table.data,
+    currentUser: state.table.currentUser
 });
 
 export default connect(mapStateToProps)(App);

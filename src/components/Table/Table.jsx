@@ -5,11 +5,16 @@ import PropTypes from 'prop-types';
 import arrowDown from '../../img/down.png';
 import arrowRight from '../../img/right.png';
 import arrowLeft from '../../img/left.png';
-import { increasePageNumber, decreasePageNumber } from '../../redux/actions.js';
+import { increasePageNumber, decreasePageNumber, setCurrentUser } from '../../redux/actions.js';
 
 import './Table.scss';
 
 class Table extends React.Component {
+
+    handleUserClick = (i, e) => {
+        const index = 20 * this.props.pageNumber + i;
+        this.props.setCurrentUser(this.props.data[index]);
+    }
     
     render() {
         const { 
@@ -61,8 +66,8 @@ class Table extends React.Component {
                     </thead>
                     <tbody id='tableBody'>
                         {
-                            (searchText.length ? found : data).slice(begin, end).map(({ id, firstName, lastName, email, phone }) => (
-                                <tr key={id + Math.floor(Math.random() * 900000)}>
+                            (searchText.length ? found : data).slice(begin, end).map(({ id, firstName, lastName, email, phone }, i) => (
+                                <tr key={id + Math.floor(Math.random() * 900000)} onClick={(e) => this.handleUserClick(i, e)}>
                                     <td>{id}</td>
                                     <td>{firstName}</td>
                                     <td>{lastName}</td>
@@ -94,6 +99,8 @@ Table.propTypes = {
     searchFlag: PropTypes.bool,
     found: PropTypes.array,
     searchText: PropTypes.string,
+    setCurrentUser: PropTypes.func,
+    currentUser: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
@@ -105,11 +112,13 @@ const mapStateToProps = (state) => ({
     searchFlag: state.table.searchFlag,
     searchText: state.table.searchText,
     found: state.table.found,
+    currentUser: state.table.currentUser
 });
 
 const mapDispatchToProps = (dispatch) => ({
     increasePageNumber: () => dispatch(increasePageNumber()),
-    decreasePageNumber: () => dispatch(decreasePageNumber())
+    decreasePageNumber: () => dispatch(decreasePageNumber()),
+    setCurrentUser: (user) => dispatch(setCurrentUser(user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
