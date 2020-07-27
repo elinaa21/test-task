@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import arrowDown from '../../img/down.png';
 import arrowRight from '../../img/right.png';
 import arrowLeft from '../../img/left.png';
-import { increasePageNumber, decreasePageNumber } from '../../redux/actions';
+import { increasePageNumber, decreasePageNumber } from '../../redux/actions.js';
 
 import './Table.scss';
 

@@ -3,6 +3,7 @@ export const actionTypes = {
     INCREASE_PAGE_NUMBER: 'INCREASE_PAGE_NUMBER',
     DECREASE_PAGE_NUMBER: 'DECREASE_PAGE_NUMBER',
     SET_SEARCH_TEXT: 'SET_SEARCH_TEXT',
+    ADD_USER: 'ADD_USER'
 }
 
 const initialState = {
@@ -57,6 +58,17 @@ export const tableReducer = (state = initialState, action) => {
                 found,
                 pageNumber: 0,
                 pageCount: found.length ? Math.ceil(found.length / 20) : state.pageCount,
+            }
+
+        case actionTypes.ADD_USER:
+            state.data.unshift(action.payload.user);
+            return {
+                ...state,
+                data: [ ...state.data ],
+                pageNumber: 0,
+                pageCount: Math.ceil(state.data.length / 20),
+                begin: 0,
+                end: 20,
             }
 
         default:

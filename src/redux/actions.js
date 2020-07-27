@@ -17,3 +17,8 @@ export const setSearchText = (searchText) => ({
     type: actionTypes.SET_SEARCH_TEXT,
     payload: { searchText }
 });
+
+export const addUser = (user) => ({
+    type: actionTypes.ADD_USER,
+    payload: { user }
+})

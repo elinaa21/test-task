@@ -6,10 +6,9 @@ import { setSearchText, findUsers } from '../../redux/actions';
 
 import './Search.scss';
 
-class Search extends React.Component {
-
-    render() {
-        const { searchText, setSearchText } = this.props;
+const Search = (props) => {
+    const { searchText, setSearchText } = props;
+    
         return (
             <div className='search'>
                 <input 
@@ -21,7 +20,6 @@ class Search extends React.Component {
                 />
             </div>
         );
-    }
 }
 
 Search.propTypes = {
