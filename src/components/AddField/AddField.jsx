@@ -16,26 +16,22 @@ class AddField extends React.Component {
             emailInput: '',
             phoneInput: ''
         }
+
+        this.handleChangeId = this.handleChange('id').bind(this);
+        this.handleChangeEmail = this.handleChange('email').bind(this);
+        this.handleChangeLastName = this.handleChange('lastName').bind(this);
+        this.handleChangeFirstName = this.handleChange('firstName').bind(this);
+        this.handleChangePhone = this.handleChange('phone').bind(this);
     }
 
-    handleChangeId = (value) => {
-        this.setState({ idInput: value});
-    }
-
-    handleChangeFirstName = (value) => {
-        this.setState({ firstNameInput: value});
-    }
-
-    handleChangeLastName = (value) => {
-        this.setState({ lastNameInput: value});
-    }
-
-    handleChangeEmail = (value) => {
-        this.setState({ emailInput: value});
-    }
-
-    handleChangePhone = (value) => {
-        this.setState({ phoneInput: value});
+    handleChange(key) {
+        return function(e) {
+            const value = e.target.value;
+            console.log(value);
+            const toMutate = {};
+            toMutate[`${key}Input`] = value;
+            this.setState(toMutate);
+        };
     }
 
     onAddUser = () => {
@@ -66,35 +62,35 @@ class AddField extends React.Component {
                 <input 
                     type="text"
                     className='addField__input'
-                    onChange={e => this.handleChangeId(e.target.value)}
+                    onChange={this.handleChangeId}
                     value={this.state.idInput}
                 />
                 <label htmlFor='firstName'>firstName</label>
                 <input 
                     type="text" 
                     className='addField__input'
-                    onChange={e => this.handleChangeFirstName(e.target.value)}
+                    onChange={this.handleChangeFirstName}
                     value={this.state.firstNameInput}
                 />
                 <label htmlFor='lastName'>lastName</label>
                 <input 
                     type="text" 
                     className='addField__input'
-                    onChange={e => this.handleChangeLastName(e.target.value)}
+                    onChange={this.handleChangeLastName}
                     value={this.state.lastNameInput}
                 />
                 <label htmlFor='email'>email</label>
                 <input 
                     type="text" 
                     className='addField__input'
-                    onChange={e => this.handleChangeEmail(e.target.value)}
+                    onChange={this.handleChangeEmail}
                     value={this.state.emailInput}
                 />
                 <label htmlFor='phone'>phone</label>
                 <input 
                     type="text"
                     className='addField__input'
-                    onChange={e => this.handleChangePhone(e.target.value)}
+                    onChange={this.handleChangePhone}
                     value={this.state.phoneInput}
                 />
                 <button className='addField__button' onClick={this.onAddUser}>Добавить в таблицу</button>

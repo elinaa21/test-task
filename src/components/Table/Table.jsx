@@ -3,15 +3,56 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import arrowDown from '../../img/down.png';
+import arrowUp from '../../img/up.png';
 import arrowRight from '../../img/right.png';
 import arrowLeft from '../../img/left.png';
-import { increasePageNumber, decreasePageNumber, setCurrentUser } from '../../redux/actions.js';
+import { increasePageNumber, decreasePageNumber, setCurrentUser, setData } from '../../redux/actions.js';
 
 import './Table.scss';
 
 class Table extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: false,
+            firstName: false,
+            lastName: false,
+            email: false,
+            phone: false
+        }
 
-    handleUserClick = (i, e) => {
+        this.sortingId = this.sorting('id').bind(this);
+        this.sortingLastName = this.sorting('lastName').bind(this);
+        this.sortingFirstName = this.sorting('firstName').bind(this);
+        this.sortingEmail = this.sorting('email').bind(this);
+        this.sortingPhone = this.sorting('phone').bind(this);
+    }
+
+    sorting = (value) => {
+        return function() {
+            const toMutate = {};
+            toMutate[value] = !this.state[value];
+            this.setState(toMutate);
+
+            const { data } = this.props;
+            if (value === 'id') {
+                this.state[value] ? 
+                    data.sort((a, b) => b[value] - a[value]) :
+                    data.sort((a, b) => a[value] - b[value])
+            } else {
+                this.state[value] ? 
+                    data.sort((a, b) => {
+                        return a[value] > b[value] ? -1 : a[value] < b[value] ? 1 : 0
+                    }) :
+                    data.sort((a, b) => {
+                        return a[value] > b[value] ? 1 : a[value] < b[value] ? -1 : 0
+                    });
+            }
+            this.props.setData(data);
+        };
+    }
+
+    handleUserClick = (i) => {
         const index = 20 * this.props.pageNumber + i;
         this.props.setCurrentUser(this.props.data[index]);
     }
@@ -44,38 +85,56 @@ class Table extends React.Component {
                         <tr>
                             <td>
                                 id
-                                <img src={arrowDown} className='table__arrow' />
+                                <img 
+                                    src={this.state.id ? arrowUp : arrowDown} 
+                                    className='table__arrow'
+                                    onClick={this.sortingId}
+                                />
                             </td>
                             <td>
                                 firstName
-                                <img src={arrowDown} className='table__arrow' />
+                                <img 
+                                    src={this.state.firstName ? arrowUp : arrowDown} 
+                                    className='table__arrow' 
+                                    onClick={this.sortingFirstName}
+                                />
                             </td>
                             <td>
                                 lastName
-                                <img src={arrowDown} className='table__arrow' />
+                                <img 
+                                    src={this.state.lastName ? arrowUp : arrowDown} 
+                                    className='table__arrow' 
+                                    onClick={this.sortingLastName}
+                                />
                             </td>
                             <td>
                                 email
-                                <img src={arrowDown} className='table__arrow' />
+                                <img 
+                                    src={this.state.email ? arrowUp : arrowDown} 
+                                    className='table__arrow'
+                                    onClick={this.sortingEmail}
+                                />
                             </td>
                             <td>
                                 phone
-                                <img src={arrowDown} className='table__arrow' />
+                                <img 
+                                    src={this.state.phone ? arrowUp : arrowDown} 
+                                    className='table__arrow'
+                                    onClick={this.sortingPhone}
+                                />
                             </td>
                         </tr>
                     </thead>
                     <tbody id='tableBody'>
-                        {
-                            (searchText.length ? found : data).slice(begin, end).map(({ id, firstName, lastName, email, phone }, i) => (
-                                <tr key={id + Math.floor(Math.random() * 900000)} onClick={(e) => this.handleUserClick(i, e)}>
+                        {(searchText.length ? found : data).slice(begin, end).map(({ id, firstName, lastName, email, phone }, i) => (
+                                <tr key={id + Math.floor(Math.random() * 900000)} onClick={() => this.handleUserClick(i)}>
                                     <td>{id}</td>
                                     <td>{firstName}</td>
                                     <td>{lastName}</td>
                                     <td>{email}</td>
                                     <td>{phone}</td>
                                 </tr>
-                            ))
-                        }
+                            ))}
                     </tbody>
                 </table>
                 <img 
@@ -101,6 +160,7 @@ Table.propTypes = {
     searchText: PropTypes.string,
     setCurrentUser: PropTypes.func,
     currentUser: PropTypes.object,
+    setData: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -118,7 +178,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     increasePageNumber: () => dispatch(increasePageNumber()),
     decreasePageNumber: () => dispatch(decreasePageNumber()),
-    setCurrentUser: (user) => dispatch(setCurrentUser(user))
+    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+    setData: (data) => dispatch(setData(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

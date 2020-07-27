@@ -25,7 +25,10 @@ export const tableReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: [...action.payload.data],
-                pageCount: action.payload.pageCount
+                pageCount: action.payload.pageCount,
+                pageNumber: 0,
+                begin: 0,
+                end: 20
             };
 
         case actionTypes.INCREASE_PAGE_NUMBER:
