@@ -1,6 +1,7 @@
 FROM node:12
-WORKDIR /usr/src/app
-RUN git clone github.com/elinaa21/react-app/
-RUN cd react-app
+RUN mkdir app
+RUN git clone https://github.com/elinaa21/test-task ./app
+WORKDIR "./app"
 RUN npm i
-RUN npm start
+EXPOSE 8080
+CMD [ "npm", "start" ]
